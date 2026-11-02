@@ -7,7 +7,7 @@ Read this before adding, moving or changing any ad, ad-block check, or page that
 - Use the shared `src/shared/components/AdSlot.tsx` only. Never paste raw AdSense snippets into pages.
 - Each slot is pushed once per mount (guard against StrictMode double-run). Reserve height with `minHeight` to avoid layout shift.
 - The AdSense `<script>` goes in the `<head>` of every HTML entry that shows ads.
-- `public/ads.txt` must be served at `https://utility.siddharthprakashan.com/ads.txt`.
+- `public/ads.txt` must be served at `https://webtools.siddharthprakashan.com/ads.txt`.
 - Ad IDs come from `.env` (`VITE_ADSENSE_CLIENT`, `VITE_ADSENSE_SLOT_*`). Never hard-code them.
 - Set `data-adtest="on"` in development. Never click live ads while developing.
 

@@ -3,7 +3,7 @@ import { HelloWorld } from "@components/HelloWorld";
 export default function Home() {
   return (
     <HelloWorld
-      title="Utility.SiddharthPrakashan"
+      title="SP WebTools"
       description="Independent, privacy-focused browser utilities."
     />
   );

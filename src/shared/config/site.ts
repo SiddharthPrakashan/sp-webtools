@@ -11,15 +11,44 @@ export interface Tool {
 }
 
 export const siteConfig = {
-  name: "Utility.SiddharthPrakashan",
-  shortName: "Utility",
-  url: "https://utility.siddharthprakashan.com",
+  name: "SP WebTools",
+  shortName: "SP WebTools",
+  url: "https://webtools.siddharthprakashan.com",
   description: "Independent, privacy-focused browser utilities.",
   author: "Siddharth Prakashan",
   authorUrl: "https://siddharthprakashan.com",
-  // TODO: confirm the public contact address.
-  email: "contact@siddharthprakashan.com",
+  email: "siddharthdev9999@gmail.com",
 } as const;
+
+export type SocialPlatform = "instagram" | "x" | "youtube";
+
+export interface SocialLink {
+  platform: SocialPlatform;
+  label: string;
+  handle: string;
+  href: string;
+}
+
+export const socialLinks: SocialLink[] = [
+  {
+    platform: "instagram",
+    label: "Instagram",
+    handle: "@siddharth.prakashan",
+    href: "https://www.instagram.com/siddharth.prakashan",
+  },
+  {
+    platform: "x",
+    label: "X",
+    handle: "@sid_prakashan",
+    href: "https://x.com/sid_prakashan",
+  },
+  {
+    platform: "youtube",
+    label: "YouTube",
+    handle: "@siddharth.prakashan",
+    href: "https://youtube.com/@siddharth.prakashan",
+  },
+];
 
 export const tools: Tool[] = [
   {

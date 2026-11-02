@@ -2,7 +2,7 @@
 
 ## Project
 
-Utility.SiddharthPrakashan (https://utility.siddharthprakashan.com): independent, privacy-focused browser utilities. Vite **multi-page app** (MPA), MIT licensed, deployed on Cloudflare Pages. Do not touch the existing `siddharthprakashan.com` site.
+SP WebTools (https://webtools.siddharthprakashan.com): independent, privacy-focused browser utilities. Vite **multi-page app** (MPA), MIT licensed, deployed on Cloudflare Pages. Do not touch the existing `siddharthprakashan.com` site.
 
 **Stack:** React 19, TypeScript, Vite 8, Tailwind CSS 4, shadcn/ui, Lucide React, AG Grid Community, ESLint, Prettier. Package manager: **pnpm only**.
 

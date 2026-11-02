@@ -1,5 +1,5 @@
 import { useEffect, useId, useState } from "react";
-import { Menu, Wrench, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 import { Button } from "@ui/button";
 import { mainNav, siteConfig } from "@config/site";
@@ -52,7 +52,13 @@ export function Navbar() {
           href="/"
           className="flex items-center gap-2 rounded-md font-semibold outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
         >
-          <Wrench className="size-5" aria-hidden="true" />
+          <img
+            src="/assets/android-chrome-192x192.png"
+            alt=""
+            width={28}
+            height={28}
+            className="size-7 rounded-md"
+          />
           <span className="hidden sm:inline">{siteConfig.name}</span>
           <span className="sm:hidden">{siteConfig.shortName}</span>
         </a>
