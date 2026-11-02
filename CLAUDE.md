@@ -16,7 +16,7 @@ Never use npm or yarn. Never edit `pnpm-lock.yaml` by hand.
 
 ## Architecture
 
-- Every page has its own root-level folder with `index.html` (`about/`, `privacy-policy/`, `terms/`, `contact/`, `credits/`, and one per utility).
+- Every page has its own root-level folder with `index.html` (`about-us/`, `privacy-policy/`, `terms-and-conditions/`, `contact-us/`, `credits/`, `disclaimer/`, `faq/`, and one per utility).
 - Site pages share `src/apps/site/main.tsx`. Each utility has its own entry at `src/apps/<utility>/main.tsx`.
 - Shared code goes in `src/shared/` (`components/`, `components/ui/` for shadcn, `config/`, `hooks/`, `lib/`, `styles/`).
 - App-specific logic stays in its own app folder. Never import from one app into another, and never move app logic into shared.

@@ -21,7 +21,7 @@ Read this before adding, moving or changing any ad, ad-block check, or page that
 ## Placement
 
 - Place ads in a sidebar or content area beside real content, away from action buttons.
-- No ads on legal and site pages (about, privacy, terms, contact, credits).
+- No ads on legal and site pages (about-us, privacy-policy, terms-and-conditions, contact-us, credits, disclaimer, faq).
 - No ads on loading, error, empty or bare-upload screens.
 
 ## Ad-block check (`useAdBlockCheck`)

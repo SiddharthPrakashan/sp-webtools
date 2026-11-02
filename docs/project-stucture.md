@@ -22,17 +22,17 @@ utility/
 │
 ├── index.html → /
 │
-├── about/
-│ └── index.html → /about/
+├── about-us/
+│ └── index.html → /about-us/
 │
 ├── privacy-policy/
 │ └── index.html → /privacy-policy/
 │
-├── terms/
-│ └── index.html → /terms/
+├── terms-and-conditions/
+│ └── index.html → /terms-and-conditions/
 │
-├── contact/
-│ └── index.html → /contact/
+├── contact-us/
+│ └── index.html → /contact-us/
 │
 ├── ig-followers-check/
 │ └── index.html → /ig-followers-check/

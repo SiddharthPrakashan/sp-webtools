@@ -55,11 +55,16 @@ export default defineConfig({
       input: {
         // Main website
         home: path.resolve(__dirname, "index.html"),
-        about: path.resolve(__dirname, "about/index.html"),
+        aboutUs: path.resolve(__dirname, "about-us/index.html"),
         privacy: path.resolve(__dirname, "privacy-policy/index.html"),
-        terms: path.resolve(__dirname, "terms/index.html"),
-        contact: path.resolve(__dirname, "contact/index.html"),
+        termsAndConditions: path.resolve(
+          __dirname,
+          "terms-and-conditions/index.html",
+        ),
+        contactUs: path.resolve(__dirname, "contact-us/index.html"),
         credits: path.resolve(__dirname, "credits/index.html"),
+        disclaimer: path.resolve(__dirname, "disclaimer/index.html"),
+        faq: path.resolve(__dirname, "faq/index.html"),
         notFound: path.resolve(__dirname, "404.html"),
 
         // Utility applications

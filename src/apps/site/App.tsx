@@ -1,21 +1,25 @@
 import type { ComponentType } from "react";
 
 import { Layout } from "@components/Layout";
-import About from "@site/pages/About";
-import Contact from "@site/pages/Contact";
+import AboutUs from "@site/pages/AboutUs";
+import ContactUs from "@site/pages/ContactUs";
 import Credits from "@site/pages/Credits";
+import Disclaimer from "@site/pages/Disclaimer";
+import Faq from "@site/pages/Faq";
 import Home from "@site/pages/Home";
 import NotFound from "@site/pages/NotFound";
 import PrivacyPolicy from "@site/pages/PrivacyPolicy";
-import Terms from "@site/pages/Terms";
+import TermsAndConditions from "@site/pages/TermsAndConditions";
 
 const pages: Record<string, ComponentType> = {
   home: Home,
-  about: About,
+  "about-us": AboutUs,
   "privacy-policy": PrivacyPolicy,
-  terms: Terms,
-  contact: Contact,
+  "terms-and-conditions": TermsAndConditions,
+  "contact-us": ContactUs,
   credits: Credits,
+  disclaimer: Disclaimer,
+  faq: Faq,
 };
 
 interface AppProps {

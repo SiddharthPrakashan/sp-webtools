@@ -1,9 +1,9 @@
 import { HelloWorld } from "@components/HelloWorld";
 
-export default function Contact() {
+export default function ContactUs() {
   return (
     <HelloWorld
-      title="Contact"
+      title="Contact Us"
       description="Get in touch with questions or feedback."
     />
   );

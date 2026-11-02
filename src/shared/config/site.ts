@@ -34,14 +34,16 @@ export const tools: Tool[] = [
 export const mainNav: NavLink[] = [
   { label: "Home", href: "/" },
   ...tools.map((tool) => ({ label: tool.name, href: tool.href })),
-  { label: "About", href: "/about/" },
-  { label: "Contact", href: "/contact/" },
+  { label: "About Us", href: "/about-us/" },
+  { label: "Contact Us", href: "/contact-us/" },
 ];
 
 export const footerNav: NavLink[] = [
-  { label: "About", href: "/about/" },
-  { label: "Contact", href: "/contact/" },
+  { label: "About Us", href: "/about-us/" },
+  { label: "Contact Us", href: "/contact-us/" },
+  { label: "FAQ", href: "/faq/" },
   { label: "Credits", href: "/credits/" },
+  { label: "Disclaimer", href: "/disclaimer/" },
   { label: "Privacy Policy", href: "/privacy-policy/" },
-  { label: "Terms", href: "/terms/" },
+  { label: "Terms and Conditions", href: "/terms-and-conditions/" },
 ];
