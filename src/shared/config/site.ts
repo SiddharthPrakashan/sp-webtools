@@ -20,7 +20,7 @@ export const siteConfig = {
   email: "siddharthdev9999@gmail.com",
 } as const;
 
-export type SocialPlatform = "instagram" | "x" | "youtube";
+export type SocialPlatform = "instagram" | "x" | "youtube" | "linkedin";
 
 export interface SocialLink {
   platform: SocialPlatform;
@@ -64,6 +64,7 @@ export const mainNav: NavLink[] = [
   { label: "Home", href: "/" },
   ...tools.map((tool) => ({ label: tool.name, href: tool.href })),
   { label: "About Us", href: "/about-us/" },
+  { label: "Credits", href: "/credits/" },
   { label: "Contact Us", href: "/contact-us/" },
 ];
 

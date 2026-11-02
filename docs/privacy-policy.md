@@ -38,9 +38,8 @@ Our utility tools are designed to process files and user inputs directly within 
 
 Examples include:
 
-- Instagram data export analysis.
-- JSON formatting and validation.
-- Image compression and conversion.
+- Instagram followers export analyzer (ig-followers-check).
+- Other browser-based utilities that may be introduced in the future.
 
 **We do not upload your selected files or tool inputs to our servers.**
 

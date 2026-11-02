@@ -11,10 +11,10 @@ export function Footer() {
           <p>
             &copy; {year}{" "}
             <a
-              href={siteConfig.authorUrl}
+              href={siteConfig.url}
               className="underline-offset-4 hover:text-foreground hover:underline"
             >
-              {siteConfig.author}
+              {siteConfig.shortName}
             </a>
             . MIT licensed. Files never leave your browser.
           </p>

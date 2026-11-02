@@ -12,9 +12,7 @@ SP WebTools provides free online tools and utilities designed to help users perf
 
 Our tools may include:
 
-- Instagram data export analysis tools.
-- JSON formatting and validation tools.
-- Image compression and conversion tools.
+- Instagram followers export analyzer (ig-followers-check).
 - Other browser-based utilities that may be introduced in the future.
 
 We reserve the right to add, modify, suspend, or discontinue any tool or feature at any time without prior notice.
