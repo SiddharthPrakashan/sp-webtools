@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 
 import { Layout } from "@components/Layout";
+import { webtoolsChrome } from "@config/site";
 import AboutUs from "@site/pages/AboutUs";
 import ContactUs from "@site/pages/ContactUs";
 import Credits from "@site/pages/Credits";
@@ -30,7 +31,7 @@ export default function App({ page }: AppProps) {
   const Page = (page && pages[page]) || NotFound;
 
   return (
-    <Layout>
+    <Layout site={webtoolsChrome}>
       <Page />
     </Layout>
   );

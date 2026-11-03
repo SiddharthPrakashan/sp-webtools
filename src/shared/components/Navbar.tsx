@@ -2,14 +2,18 @@ import { useEffect, useId, useState } from "react";
 import { Menu, X } from "lucide-react";
 
 import { Button } from "@ui/button";
-import { mainNav, siteConfig } from "@config/site";
+import type { SiteChrome } from "@config/site";
 import { cn } from "@lib/utils";
 
 function normalizePath(path: string) {
   return path.endsWith("/") ? path : `${path}/`;
 }
 
-export function Navbar() {
+interface NavbarProps {
+  site: SiteChrome;
+}
+
+export function Navbar({ site }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const menuId = useId();
   const currentPath = normalizePath(window.location.pathname);
@@ -53,18 +57,18 @@ export function Navbar() {
           className="flex items-center gap-2 rounded-md font-semibold outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
         >
           <img
-            src="/assets/android-chrome-192x192.png"
+            src={site.logo}
             alt=""
             width={28}
             height={28}
             className="size-7 rounded-md"
           />
-          <span className="hidden sm:inline">{siteConfig.name}</span>
-          <span className="sm:hidden">{siteConfig.shortName}</span>
+          <span className="hidden sm:inline">{site.name}</span>
+          <span className="sm:hidden">{site.shortName}</span>
         </a>
 
         <ul className="hidden items-center gap-1 md:flex">
-          {mainNav.map((link) => (
+          {site.mainNav.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
@@ -94,7 +98,7 @@ export function Navbar() {
 
       <div id={menuId} hidden={!open} className="border-t md:hidden">
         <ul className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-3 sm:px-6">
-          {mainNav.map((link) => (
+          {site.mainNav.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}

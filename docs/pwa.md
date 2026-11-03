@@ -5,7 +5,7 @@ Read this before adding or changing a manifest, service worker, icon or offline 
 ## Files
 
 - Each utility has its own files in `public/<utility>/`: `manifest.json`, `sw.js`, and `icons/` (`icon-192.png`, `icon-512.png`, `maskable-512.png`).
-- Files in `public/` are copied as-is to `dist/`. `sw.js` is a plain file and is never bundled by Vite.
+- Files in `public/` are copied as-is to `dist-webtools/`. `sw.js` is a plain file and is never bundled by Vite.
 - The site pages (about-us, privacy-policy, terms-and-conditions, contact-us, credits, disclaimer, faq) have no service worker.
 
 ## Manifest

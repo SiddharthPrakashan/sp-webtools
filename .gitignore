@@ -9,6 +9,8 @@ lerna-debug.log*
 
 node_modules
 dist
+dist-webtools
+dist-root
 dist-ssr
 *.local
 
