@@ -113,5 +113,6 @@ export const rootChrome: SiteChrome = {
     { label: siteConfig.name, href: `${siteConfig.url}/` },
   ],
   footerNav: [{ label: siteConfig.name, href: `${siteConfig.url}/` }],
-  footerNote: "MIT licensed.",
+  footerNote:
+    "Built with care, curiosity, and a commitment to responsible technology.",
 };

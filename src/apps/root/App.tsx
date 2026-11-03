@@ -1,6 +1,7 @@
 import { HelloWorld } from "@components/HelloWorld";
 import { Layout } from "@components/Layout";
 import { rootChrome } from "@config/site";
+import Home from "@root/pages/Home";
 
 interface AppProps {
   page: string | undefined;
@@ -10,7 +11,7 @@ export default function App({ page }: AppProps) {
   return (
     <Layout site={rootChrome}>
       {page === "home" ? (
-        <HelloWorld title={rootChrome.name} />
+        <Home />
       ) : (
         <HelloWorld
           title="Page not found"
