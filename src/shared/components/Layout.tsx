@@ -2,12 +2,14 @@ import type { ReactNode } from "react";
 
 import { Footer } from "@components/Footer";
 import { Navbar } from "@components/Navbar";
+import type { SiteChrome } from "@config/site";
 
 interface LayoutProps {
+  site: SiteChrome;
   children: ReactNode;
 }
 
-export function Layout({ children }: LayoutProps) {
+export function Layout({ site, children }: LayoutProps) {
   return (
     <div className="flex min-h-svh flex-col">
       <a
@@ -16,14 +18,14 @@ export function Layout({ children }: LayoutProps) {
       >
         Skip to content
       </a>
-      <Navbar />
+      <Navbar site={site} />
       <main
         id="main"
         className="mx-auto w-full max-w-6xl flex-1 px-4 py-10 sm:px-6"
       >
         {children}
       </main>
-      <Footer />
+      <Footer site={site} />
     </div>
   );
 }

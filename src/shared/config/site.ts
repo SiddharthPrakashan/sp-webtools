@@ -77,3 +77,41 @@ export const footerNav: NavLink[] = [
   { label: "Privacy Policy", href: "/privacy-policy/" },
   { label: "Terms and Conditions", href: "/terms-and-conditions/" },
 ];
+
+/** Branding and navigation for the shared Layout, Navbar and Footer. */
+export interface SiteChrome {
+  name: string;
+  shortName: string;
+  /** Home URL, used for the copyright link. */
+  url: string;
+  logo: string;
+  mainNav: NavLink[];
+  footerNav: NavLink[];
+  /** Text after the copyright line. */
+  footerNote?: string;
+}
+
+/** SP WebTools: https://webtools.siddharthprakashan.com */
+export const webtoolsChrome: SiteChrome = {
+  name: siteConfig.name,
+  shortName: siteConfig.shortName,
+  url: siteConfig.url,
+  logo: "/assets/android-chrome-192x192.png",
+  mainNav,
+  footerNav,
+  footerNote: "MIT licensed. Files never leave your browser.",
+};
+
+/** Root website: https://siddharthprakashan.com */
+export const rootChrome: SiteChrome = {
+  name: siteConfig.author,
+  shortName: siteConfig.author,
+  url: siteConfig.authorUrl,
+  logo: "/assets/android-chrome-192x192.png",
+  mainNav: [
+    { label: "Home", href: "/" },
+    { label: siteConfig.name, href: `${siteConfig.url}/` },
+  ],
+  footerNav: [{ label: siteConfig.name, href: `${siteConfig.url}/` }],
+  footerNote: "MIT licensed.",
+};

@@ -2,13 +2,14 @@
 
 ## Project
 
-SP WebTools (https://webtools.siddharthprakashan.com): independent, privacy-focused browser utilities. Vite **multi-page app** (MPA), MIT licensed, deployed on Cloudflare Pages. Do not touch the existing `siddharthprakashan.com` site.
+SP WebTools (https://webtools.siddharthprakashan.com): independent, privacy-focused browser utilities. Vite **multi-page app** (MPA), MIT licensed, deployed on Cloudflare Pages. The same repo also builds the root website (https://siddharthprakashan.com) as a separate Cloudflare Pages project; see `docs/vite-config.md`.
 
 **Stack:** React 19, TypeScript, Vite 8, Tailwind CSS 4, shadcn/ui, Lucide React, AG Grid Community, ESLint, Prettier. Package manager: **pnpm only**.
 
 ## Commands
 
-- `pnpm dev` / `pnpm build` / `pnpm preview`
+- `pnpm dev` / `pnpm preview`: SP WebTools. `pnpm dev:root` / `pnpm preview:root`: root website
+- `pnpm build`: type check and build both sites. `pnpm build:webtools` → `dist-webtools/`, `pnpm build:root` → `dist-root/`
 - `pnpm check`: type check and lint
 - `pnpm add <pkg>` / `pnpm add -D <pkg>` / `pnpm remove <pkg>`
 
@@ -17,6 +18,7 @@ Never use npm or yarn. Never edit `pnpm-lock.yaml` by hand.
 ## Architecture
 
 - Every page has its own root-level folder with `index.html` (`about-us/`, `privacy-policy/`, `terms-and-conditions/`, `contact-us/`, `credits/`, `disclaimer/`, `faq/`, and one per utility).
+- Root website: HTML entries and its own `public/` live in `root-site/`, the app in `src/apps/root/`. It reuses the shared `Layout` with `rootChrome` from `site.ts`; brand assets are shared from `public/assets/`.
 - Site pages share `src/apps/site/main.tsx`. Each utility has its own entry at `src/apps/<utility>/main.tsx`.
 - Shared code goes in `src/shared/` (`components/`, `components/ui/` for shadcn, `config/`, `hooks/`, `lib/`, `styles/`).
 - App-specific logic stays in its own app folder. Never import from one app into another, and never move app logic into shared.
@@ -28,14 +30,14 @@ Never use npm or yarn. Never edit `pnpm-lock.yaml` by hand.
 - **Never** convert to a React Router SPA or add a global SPA fallback.
 - Link between pages with plain `<a href>`.
 - Direct navigation and refresh must work on every page.
-- Add new HTML entries to `vite.config.ts`.
+- Add new HTML entries to `vite.webtools.config.ts` (or `vite.root.config.ts` for the root website). Shared Vite settings live in `vite.shared.ts`.
 - Keep a top-level `404.html` so Cloudflare Pages does not treat the site as an SPA.
 
 ## Import aliases
 
 Use aliases, not deep relative paths. Keep Vite and `tsconfig` in sync.
 
-`@` → `src/`, `@shared`, `@components`, `@ui`, `@config`, `@hooks`, `@lib`, `@styles` → matching folders under `src/shared/`, `@apps` → `src/apps/`, `@site`, `@ig-followers-check`, `@json`, `@image` → the matching app folders.
+`@` → `src/`, `@shared`, `@components`, `@ui`, `@config`, `@hooks`, `@lib`, `@styles` → matching folders under `src/shared/`, `@apps` → `src/apps/`, `@site`, `@root`, `@ig-followers-check`, `@json`, `@image` → the matching app folders.
 
 ## UI
 
@@ -69,7 +71,7 @@ Every public page needs a unique title and description, a canonical URL, Open Gr
 ## Adding a utility
 
 1. Create `src/apps/<name>/` with `main.tsx` and `App.tsx`.
-2. Create `<name>/index.html` and add it to `vite.config.ts`.
+2. Create `<name>/index.html` and add it to `vite.webtools.config.ts`.
 3. Add its metadata to `src/shared/config/site.ts` (this feeds nav, home, About and Privacy).
 4. Add it to `public/sitemap.xml`, and add PWA files in `public/<name>/` if needed.
 5. Run `pnpm check` and `pnpm build`.

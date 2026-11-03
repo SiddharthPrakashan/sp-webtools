@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Always scan src/: auto-detection starts at the Vite root, which is
+   root-site/ for the root website build. */
+@source "../../";
+
 @custom-variant dark (@media (prefers-color-scheme: dark));
 
 :root {

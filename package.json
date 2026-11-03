@@ -9,16 +9,20 @@
   "packageManager": "pnpm@10.25.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview",
+    "dev": "vite --config vite.webtools.config.ts",
+    "dev:root": "vite --config vite.root.config.ts",
+    "build": "tsc -b && pnpm build:webtools && pnpm build:root",
+    "build:webtools": "vite build --config vite.webtools.config.ts",
+    "build:root": "vite build --config vite.root.config.ts",
+    "preview": "vite preview --config vite.webtools.config.ts",
+    "preview:root": "vite preview --config vite.root.config.ts",
     "typecheck": "tsc -b --pretty",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check": "pnpm typecheck && pnpm lint",
-    "clean": "rm -rf dist node_modules/.vite"
+    "clean": "rm -rf dist-webtools dist-root node_modules/.vite"
   },
   "dependencies": {
     "ag-grid-react": "^36.2.0",

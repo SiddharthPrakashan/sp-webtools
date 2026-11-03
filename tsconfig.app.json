@@ -33,6 +33,7 @@
       "@styles/*": ["./src/shared/styles/*"],
       "@apps/*": ["./src/apps/*"],
       "@site/*": ["./src/apps/site/*"],
+      "@root/*": ["./src/apps/root/*"],
       "@ig-followers-check/*": ["./src/apps/ig-followers-check/*"]
     }
   },

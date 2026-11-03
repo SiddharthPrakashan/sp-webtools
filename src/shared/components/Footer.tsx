@@ -1,7 +1,11 @@
 import { SocialIcon } from "@components/SocialIcon";
-import { footerNav, siteConfig, socialLinks } from "@config/site";
+import { socialLinks, type SiteChrome } from "@config/site";
 
-export function Footer() {
+interface FooterProps {
+  site: SiteChrome;
+}
+
+export function Footer({ site }: FooterProps) {
   const year = new Date().getFullYear();
 
   return (
@@ -11,13 +15,14 @@ export function Footer() {
           <p>
             &copy; {year}{" "}
             <a
-              href={siteConfig.url}
+              href={site.url}
               className="underline-offset-4 hover:text-foreground hover:underline"
             >
-              {siteConfig.shortName}
+              {site.shortName}
             </a>
-            . MIT licensed. Files never leave your browser.
+            .{site.footerNote && ` ${site.footerNote}`}
           </p>
+          <p className="text-xs">Version {__APP_VERSION__}</p>
 
           <ul
             aria-label="Social media"
@@ -42,7 +47,7 @@ export function Footer() {
 
         <nav aria-label="Footer">
           <ul className="flex flex-wrap gap-x-4 gap-y-2">
-            {footerNav.map((link) => (
+            {site.footerNav.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
