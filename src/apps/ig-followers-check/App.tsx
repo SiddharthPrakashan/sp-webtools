@@ -6,7 +6,7 @@ export default function App() {
     <Layout>
       <HelloWorld
         title="IG Followers Check"
-        description="See who doesn't follow you back using your Instagram data export, processed entirely in your browser."
+        description="Coming soon.. See who doesn't follow you back using your Instagram data export, processed entirely in your browser."
       />
     </Layout>
   );
