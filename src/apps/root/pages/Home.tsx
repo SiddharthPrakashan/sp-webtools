@@ -133,6 +133,8 @@ export default function Home() {
       >
         <img
           src={PROFILE_PHOTO}
+          loading="eager"
+          fetchPriority="high"
           alt="Siddharth Prakashan"
           width={256}
           height={256}

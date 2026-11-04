@@ -59,6 +59,8 @@ export function Navbar({ site }: NavbarProps) {
         >
           <img
             src={site.logo}
+            loading="eager"
+            fetchPriority="high"
             alt=""
             width={28}
             height={28}
