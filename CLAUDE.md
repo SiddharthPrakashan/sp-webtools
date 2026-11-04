@@ -65,7 +65,7 @@ Non-negotiable: keep each service worker scoped to its utility, never delete oth
 
 ## Advertising
 
-Use `AdSlot.tsx` only. **Before touching ads or the ad-block check, read `docs/adsense-policy.md`.**
+Use `AdSlot.tsx` only; page-level slots via `<Layout showAds>`, IDs in `src/shared/config/ads.ts` from `.env`. **Before touching ads or the ad-block check, read `docs/adsense-policy.md`.**
 
 Non-negotiable: never auto-refresh ads, never force an ad on a button click, never ask users to click ads, and never put ads on legal pages or on loading, error or empty screens.
 
