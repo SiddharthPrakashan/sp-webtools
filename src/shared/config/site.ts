@@ -71,9 +71,9 @@ export const mainNav: NavLink[] = [
 export const footerNav: NavLink[] = [
   { label: "About Us", href: "/about-us/" },
   { label: "Contact Us", href: "/contact-us/" },
-  { label: "FAQ", href: "/faq/" },
+  // { label: "FAQ", href: "/faq/" },
   { label: "Credits", href: "/credits/" },
-  { label: "Disclaimer", href: "/disclaimer/" },
+  // { label: "Disclaimer", href: "/disclaimer/" },
   { label: "Privacy Policy", href: "/privacy-policy/" },
   { label: "Terms and Conditions", href: "/terms-and-conditions/" },
 ];

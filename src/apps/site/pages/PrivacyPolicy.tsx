@@ -12,7 +12,7 @@ function ExternalLink({ href }: { href: string }) {
 // Source: docs/privacy-policy.md. Keep both in sync.
 export default function PrivacyPolicy() {
   return (
-    <LegalPage title="Privacy Policy" lastUpdated="November 2, 2026">
+    <LegalPage title="Privacy Policy" lastUpdated="November 4, 2026">
       <p>
         Welcome to <strong>{siteConfig.name}</strong> (
         <code>{siteConfig.url}</code>). Your privacy is important to us. This
@@ -88,8 +88,8 @@ export default function PrivacyPolicy() {
         <p>
           Files and user-provided inputs are processed locally in your browser.
           Where an application saves information for convenience or to preserve
-          your progress, that information may be stored in your browser&apos;s
-          local storage (<code>localStorage</code>).
+          your progress, that information may be stored in your browser using
+          local storage (<code>localStorage</code>) or IndexedDB.
         </p>
         <p>This means:</p>
         <ul>
@@ -103,8 +103,8 @@ export default function PrivacyPolicy() {
             the same website origin and browser profile.
           </li>
           <li>
-            Clearing your browser&apos;s site data or local storage may
-            permanently remove saved information.
+            Clearing your browser&apos;s site data, local storage or IndexedDB
+            may permanently remove saved information.
           </li>
           <li>
             Locally stored information may not be available on another device or
@@ -121,20 +121,34 @@ export default function PrivacyPolicy() {
         <h2 id="local-storage">3. Local Storage and Browser Technologies</h2>
         <p>
           Our website uses browser storage technologies, including{" "}
-          <code>localStorage</code>, to store certain user inputs, preferences,
-          or application data.
+          <code>localStorage</code> and IndexedDB, to store certain user inputs,
+          preferences, or application data.
         </p>
+        <ul>
+          <li>
+            <code>localStorage</code> is used for small settings and
+            preferences, such as your light or dark mode choice.
+          </li>
+          <li>
+            IndexedDB is used for larger application data, such as records you
+            import into a tool, so that your data can be viewed again without
+            re-uploading it.
+          </li>
+        </ul>
         <p>
-          Unlike cookies, local storage does not automatically send stored
-          values to our servers with every HTTP request.
+          Unlike cookies, local storage and IndexedDB do not automatically send
+          stored values to our servers with every HTTP request. Information
+          stored this way stays in your browser and is not uploaded to our
+          servers.
         </p>
         <p>
           You can remove locally stored information by clearing the
           website&apos;s data through your browser settings.
         </p>
         <p>
-          Please note that clearing local storage may cause saved preferences or
-          previously entered information to be lost.
+          Please note that clearing local storage or IndexedDB may cause saved
+          preferences, imported records or previously entered information to be
+          lost.
         </p>
       </section>
 
@@ -279,8 +293,9 @@ export default function PrivacyPolicy() {
           of our website.
         </p>
         <p>
-          Information stored through <code>localStorage</code> remains on your
-          device and is subject to the security of your browser and device.
+          Information stored through <code>localStorage</code> or IndexedDB
+          remains on your device and is subject to the security of your browser
+          and device.
         </p>
         <p>
           We do not maintain server-side copies of files or tool inputs

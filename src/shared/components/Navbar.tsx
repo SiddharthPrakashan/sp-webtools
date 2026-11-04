@@ -2,6 +2,7 @@ import { useEffect, useId, useState } from "react";
 import { Menu, X } from "lucide-react";
 
 import { Button } from "@ui/button";
+import { ThemeToggle } from "@components/ThemeToggle";
 import type { SiteChrome } from "@config/site";
 import { cn } from "@lib/utils";
 
@@ -83,17 +84,20 @@ export function Navbar({ site }: NavbarProps) {
           ))}
         </ul>
 
-        <Button
-          variant="ghost"
-          size="icon"
-          className="md:hidden"
-          aria-expanded={open}
-          aria-controls={menuId}
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((value) => !value)}
-        >
-          {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-        </Button>
+        <div className="flex items-center gap-1 md:ml-auto">
+          <ThemeToggle />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            aria-expanded={open}
+            aria-controls={menuId}
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+          </Button>
+        </div>
       </nav>
 
       <div id={menuId} hidden={!open} className="border-t md:hidden">
