@@ -79,6 +79,35 @@ function repoSourceInDev(): Plugin {
   };
 }
 
+/**
+ * Sets the theme on <html> before first paint so pages don't flash the wrong
+ * theme. Mirrors applyTheme() in src/shared/lib/theme.ts and reads the
+ * Zustand store persisted under SETTINGS_STORAGE_KEY in
+ * src/shared/stores/settings.ts; keep all three in sync.
+ */
+function themeScript(): Plugin {
+  const code = `(function () {
+  var t;
+  try {
+    var s = JSON.parse(localStorage.getItem("sp-webtools:settings") || "null");
+    t = s && s.state && s.state.theme;
+  } catch (e) {}
+  if (t !== "light" && t !== "dark") {
+    t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+  var r = document.documentElement;
+  if (t === "dark") r.classList.add("dark");
+  r.style.colorScheme = t;
+})();`;
+
+  return {
+    name: "sp:theme-script",
+    transformIndexHtml: () => [
+      { tag: "script", children: code, injectTo: "head-prepend" },
+    ],
+  };
+}
+
 interface SiteConfigOptions {
   /** Folder containing the site's HTML entries. */
   root: string;
@@ -104,6 +133,7 @@ export function createSiteConfig(options: SiteConfigOptions): UserConfig {
       mkcert(),
       react(),
       tailwindcss(),
+      themeScript(),
       ...(path.resolve(options.root) === repoRoot ? [] : [repoSourceInDev()]),
       ...(options.plugins ?? []),
     ],

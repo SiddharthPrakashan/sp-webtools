@@ -4,7 +4,7 @@
 
 SP WebTools (https://webtools.siddharthprakashan.com): independent, privacy-focused browser utilities. Vite **multi-page app** (MPA), MIT licensed, deployed on Cloudflare Pages. The same repo also builds the root website (https://siddharthprakashan.com) as a separate Cloudflare Pages project; see `docs/vite-config.md`.
 
-**Stack:** React 19, TypeScript, Vite 8, Tailwind CSS 4, shadcn/ui, Lucide React, AG Grid Community, ESLint, Prettier. Package manager: **pnpm only**.
+**Stack:** React 19, TypeScript, Vite 8, Tailwind CSS 4, shadcn/ui, Lucide React, AG Grid Community, Zustand, Dexie, ESLint, Prettier. Package manager: **pnpm only**.
 
 ## Commands
 
@@ -20,7 +20,7 @@ Never use npm or yarn. Never edit `pnpm-lock.yaml` by hand.
 - Every page has its own root-level folder with `index.html` (`about-us/`, `privacy-policy/`, `terms-and-conditions/`, `contact-us/`, `credits/`, `disclaimer/`, `faq/`, and one per utility).
 - Root website: HTML entries and its own `public/` live in `root-site/`, the app in `src/apps/root/`. It reuses the shared `Layout` with `rootChrome` from `site.ts`; brand assets are shared from `public/assets/`.
 - Site pages share `src/apps/site/main.tsx`. Each utility has its own entry at `src/apps/<utility>/main.tsx`.
-- Shared code goes in `src/shared/` (`components/`, `components/ui/` for shadcn, `config/`, `hooks/`, `lib/`, `styles/`).
+- Shared code goes in `src/shared/` (`components/`, `components/ui/` for shadcn, `config/`, `hooks/`, `lib/`, `stores/`, `styles/`).
 - App-specific logic stays in its own app folder. Never import from one app into another, and never move app logic into shared.
 - Common site config (name, email, tools list) lives in `src/shared/config/site.ts`.
 - Import `globals.css` in every entry point.
@@ -43,6 +43,19 @@ Use aliases, not deep relative paths. Keep Vite and `tsconfig` in sync.
 
 - Tailwind 4 and shadcn/ui first, Lucide for icons, mobile-first, keyboard accessible.
 - **AG Grid:** use `ag-grid-community` and `ag-grid-react` (never `@ag-grid-community/*`). Register modules once in `src/shared/lib/agGrid.ts`. Load it only on pages that need it, and skip it for simple tables.
+
+## State and storage
+
+- **Zustand** (`zustand`) for app state, persisted to `localStorage` with the `persist` middleware (`createJSONStorage(() => localStorage)`).
+  - Shared global state (theme / dark-light mode and other site-wide preferences) lives in `src/shared/stores/`, key prefix `sp-webtools:` (for example `sp-webtools:settings`).
+  - Theme: `useSettingsStore` (`src/shared/stores/settings.ts`, key `sp-webtools:settings`), `useTheme` / `useApplyTheme` (`@hooks/useTheme`) and `ThemeToggle` in the navbar. Dark mode uses the `.dark` class on `<html>`, which the `themeScript()` plugin in `vite.shared.ts` sets before first paint. If you change the storage key or state shape, update that script too.
+  - Each utility has its own stores in `src/apps/<utility>/stores/`, key prefix `<utility>:` (for example `ig-followers-check:settings`). Never import one utility's store into another, and never put utility state in a shared store.
+  - Persist only small settings and UI preferences. Use `partialize` to exclude transient state, and set `version` with `migrate` when the persisted shape changes.
+- **Dexie** (`dexie`, `dexie-react-hooks`) for large or tabular data stored in IndexedDB (for example Instagram follower records shown in AG Grid). Never put this data in Zustand or `localStorage`.
+  - One database per utility, defined in `src/apps/<utility>/db.ts`, named `<utility>` (for example `ig-followers-check`). No shared database.
+  - Read with `useLiveQuery` and handle its `undefined` (loading) result. Bump the Dexie schema version for every schema change; never edit an existing version.
+  - Offer users a way to clear their stored data.
+- All storage stays on the device. Never sync it to a server. Keep the Privacy Policy accurate about which browser storage (`localStorage`, IndexedDB) is used.
 
 ## PWA
 

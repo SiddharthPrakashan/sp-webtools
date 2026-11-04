@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Last updated: November 2, 2026**
+**Last updated: November 4, 2026**
 
 Welcome to **SP WebTools** (`https://webtools.siddharthprakashan.com`). Your privacy is important to us. This Privacy Policy explains how our website handles information, how browser storage works, and how third-party services may collect information when you use our website.
 
@@ -43,27 +43,30 @@ Examples include:
 
 **We do not upload your selected files or tool inputs to our servers.**
 
-Files and user-provided inputs are processed locally in your browser. Where an application saves information for convenience or to preserve your progress, that information may be stored in your browser's local storage (`localStorage`).
+Files and user-provided inputs are processed locally in your browser. Where an application saves information for convenience or to preserve your progress, that information may be stored in your browser using local storage (`localStorage`) or IndexedDB.
 
 This means:
 
 - Your selected files and inputs remain on your device.
 - We do not receive or store the contents of these files on our servers.
 - Your locally stored information is generally accessible only through the same website origin and browser profile.
-- Clearing your browser's site data or local storage may permanently remove saved information.
+- Clearing your browser's site data, local storage or IndexedDB may permanently remove saved information.
 - Locally stored information may not be available on another device or browser.
 
 We recommend avoiding the use of our tools with highly sensitive or confidential information.
 
 ## 3. Local Storage and Browser Technologies
 
-Our website uses browser storage technologies, including `localStorage`, to store certain user inputs, preferences, or application data.
+Our website uses browser storage technologies, including `localStorage` and IndexedDB, to store certain user inputs, preferences, or application data.
 
-Unlike cookies, local storage does not automatically send stored values to our servers with every HTTP request.
+- `localStorage` is used for small settings and preferences, such as your light or dark mode choice.
+- IndexedDB is used for larger application data, such as records you import into a tool, so that your data can be viewed again without re-uploading it.
+
+Unlike cookies, local storage and IndexedDB do not automatically send stored values to our servers with every HTTP request. Information stored this way stays in your browser and is not uploaded to our servers.
 
 You can remove locally stored information by clearing the website's data through your browser settings.
 
-Please note that clearing local storage may cause saved preferences or previously entered information to be lost.
+Please note that clearing local storage or IndexedDB may cause saved preferences, imported records or previously entered information to be lost.
 
 ## 4. Cookies and Similar Technologies
 
@@ -145,7 +148,7 @@ We may also disclose information when required by applicable laws, regulations, 
 
 We take reasonable measures to maintain the security and reliability of our website.
 
-Information stored through `localStorage` remains on your device and is subject to the security of your browser and device.
+Information stored through `localStorage` or IndexedDB remains on your device and is subject to the security of your browser and device.
 
 We do not maintain server-side copies of files or tool inputs processed locally by our applications.
 

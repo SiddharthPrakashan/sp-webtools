@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Footer } from "@components/Footer";
 import { Navbar } from "@components/Navbar";
 import type { SiteChrome } from "@config/site";
+import { useApplyTheme } from "@hooks/useTheme";
 
 interface LayoutProps {
   site: SiteChrome;
@@ -10,6 +11,8 @@ interface LayoutProps {
 }
 
 export function Layout({ site, children }: LayoutProps) {
+  useApplyTheme();
+
   return (
     <div className="flex min-h-svh flex-col">
       <a
