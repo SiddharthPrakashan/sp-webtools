@@ -29,9 +29,12 @@ interface AppProps {
 
 export default function App({ page }: AppProps) {
   const Page = (page && pages[page]) || NotFound;
+  // Ads only on pages listed here. Never on legal/site pages or the 404 page
+  // (docs/adsense-policy.md); their HTML entries don't load AdSense either.
+  const showAds = Page === Home;
 
   return (
-    <Layout site={webtoolsChrome}>
+    <Layout site={webtoolsChrome} showAds={showAds}>
       <Page />
     </Layout>
   );

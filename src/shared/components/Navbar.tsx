@@ -48,7 +48,7 @@ export function Navbar({ site }: NavbarProps) {
     );
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+    <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur supports-backdrop-filter:bg-background/70">
       <nav
         aria-label="Main"
         className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6"
@@ -59,6 +59,8 @@ export function Navbar({ site }: NavbarProps) {
         >
           <img
             src={site.logo}
+            loading="eager"
+            fetchPriority="high"
             alt=""
             width={28}
             height={28}

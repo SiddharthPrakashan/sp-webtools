@@ -96,7 +96,7 @@ export const webtoolsChrome: SiteChrome = {
   name: siteConfig.name,
   shortName: siteConfig.shortName,
   url: siteConfig.url,
-  logo: "/assets/android-chrome-192x192.png",
+  logo: "/assets/favicon-32x32.png",
   mainNav,
   footerNav,
   footerNote: "MIT licensed. Files never leave your browser.",
@@ -107,7 +107,7 @@ export const rootChrome: SiteChrome = {
   name: siteConfig.author,
   shortName: siteConfig.author,
   url: siteConfig.authorUrl,
-  logo: "/assets/android-chrome-192x192.png",
+  logo: "/assets/favicon-32x32.png",
   mainNav: [
     { label: "Home", href: "/" },
     { label: siteConfig.name, href: `${siteConfig.url}/` },
