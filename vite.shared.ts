@@ -183,11 +183,21 @@ export function createSiteConfig(options: SiteConfigOptions): UserConfig {
 
         // Give shared chunks stable, meaningful names instead of letting the
         // bundler name them after whichever module it happens to see first.
+        // minShareCount keeps code used by a single page (for example AG Grid
+        // on a utility page) out of the chunks every page loads.
         output: {
           codeSplitting: {
             groups: [
-              { name: "vendor", test: /[\\/]node_modules[\\/]/ },
-              { name: "shared", test: /[\\/]src[\\/]shared[\\/]/ },
+              {
+                name: "vendor",
+                test: /[\\/]node_modules[\\/]/,
+                minShareCount: 2,
+              },
+              {
+                name: "shared",
+                test: /[\\/]src[\\/]shared[\\/]/,
+                minShareCount: 2,
+              },
             ],
           },
         },

@@ -25,11 +25,13 @@
     "clean": "rm -rf dist-webtools dist-root node_modules/.vite"
   },
   "dependencies": {
+    "ag-grid-community": "36.2.0",
     "ag-grid-react": "^36.2.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dexie": "^4.4.7",
     "dexie-react-hooks": "^4.4.0",
+    "jszip": "^3.10.2",
     "lucide-react": "^1.65.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
