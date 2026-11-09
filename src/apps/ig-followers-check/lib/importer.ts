@@ -13,9 +13,9 @@ const MB = 1024 * 1024;
 const MAX_ZIP_BYTES = 512 * MB;
 const MAX_JSON_BYTES = 50 * MB;
 
-type FileKind = "followers" | "following" | "pending";
+export type FileKind = "followers" | "following" | "pending";
 
-interface SourceFile {
+export interface SourceFile {
   path: string;
   kind: FileKind;
   size?: number;
@@ -155,7 +155,45 @@ function isJson(file: File) {
   return /\.json$/i.test(file.name);
 }
 
-async function sourcesFromZip(file: File): Promise<SourceFile[]> {
+/** One file shown in the import preview. */
+export interface PreviewEntry {
+  path: string;
+  /** Uncompressed size in bytes, when known. */
+  size?: number;
+  kind: FileKind | null;
+  /** Whether this file will be imported. */
+  used: boolean;
+}
+
+/** One selected file (a ZIP or a JSON file) and what it contains. */
+export interface PreviewSource {
+  name: string;
+  size: number;
+  type: "zip" | "json";
+  entries: PreviewEntry[];
+}
+
+export interface ExportPreview {
+  sources: PreviewSource[];
+  /** Files that will be parsed when the user proceeds. */
+  selected: SourceFile[];
+  /** Why the import can't continue, if it can't. */
+  problem: string | null;
+}
+
+/**
+ * JSZip doesn't expose entry sizes publicly, but keeps the uncompressed size
+ * read from the ZIP's central directory on each loaded entry.
+ */
+function zipEntrySize(entry: JSZip.JSZipObject): number | undefined {
+  const size = (entry as unknown as { _data?: { uncompressedSize?: unknown } })
+    ._data?.uncompressedSize;
+  return typeof size === "number" && size >= 0 ? size : undefined;
+}
+
+async function inspectZip(
+  file: File,
+): Promise<{ entries: PreviewEntry[]; sources: SourceFile[] }> {
   if (file.size > MAX_ZIP_BYTES) {
     throw new Error(
       `${file.name} is larger than ${MAX_ZIP_BYTES / MB} MB. ` +
@@ -170,33 +208,51 @@ async function sourcesFromZip(file: File): Promise<SourceFile[]> {
     throw new Error(`${file.name} is not a valid ZIP file.`);
   }
 
-  return Object.values(zip.files).flatMap((entry) => {
-    if (entry.dir) return [];
+  const entries: PreviewEntry[] = [];
+  const sources: SourceFile[] = [];
+
+  for (const entry of Object.values(zip.files)) {
+    if (entry.dir) continue;
 
     const path = entry.name.replace(/\\/g, "/");
     const kind = fileKind(path);
-    if (!kind) return [];
+    const size = zipEntrySize(entry);
 
-    return [{ path, kind, read: () => entry.async("string") }];
-  });
+    entries.push({ path, size, kind, used: false });
+    if (kind) {
+      sources.push({ path, kind, size, read: () => entry.async("string") });
+    }
+  }
+
+  return { entries, sources };
 }
 
-function sourceFromJson(file: File): SourceFile[] {
+function inspectJson(file: File): {
+  entries: PreviewEntry[];
+  sources: SourceFile[];
+} {
   const path = (file.webkitRelativePath || file.name).replace(/\\/g, "/");
   const kind = fileKind(path);
-  if (!kind) return [];
 
-  return [{ path, kind, size: file.size, read: () => file.text() }];
+  return {
+    entries: [{ path, size: file.size, kind, used: false }],
+    sources: kind
+      ? [{ path, kind, size: file.size, read: () => file.text() }]
+      : [],
+  };
 }
 
+const byPath = (a: { path: string }, b: { path: string }) =>
+  a.path.localeCompare(b.path, undefined, { numeric: true });
+
 /**
- * Reads followers, following and pending-request files from an Instagram
- * export (a ZIP, or the JSON files themselves) entirely in the browser.
- * Returns username → relationship bit flags.
+ * Lists the contents of the selected Instagram export (a ZIP, or the JSON
+ * files themselves) without parsing any JSON, so the user can review it
+ * before importing. Everything stays in the browser.
  */
-export async function parseInstagramFiles(
+export async function inspectInstagramFiles(
   files: File[],
-): Promise<Map<string, number>> {
+): Promise<ExportPreview> {
   if (files.length === 0) throw new Error("No file selected.");
 
   const unsupported = files.find((file) => !isZip(file) && !isJson(file));
@@ -206,11 +262,20 @@ export async function parseInstagramFiles(
     );
   }
 
+  const previews: PreviewSource[] = [];
   const sources: SourceFile[] = [];
+
   for (const file of files) {
-    sources.push(
-      ...(isZip(file) ? await sourcesFromZip(file) : sourceFromJson(file)),
-    );
+    const zip = isZip(file);
+    const result = zip ? await inspectZip(file) : inspectJson(file);
+
+    previews.push({
+      name: file.name,
+      size: file.size,
+      type: zip ? "zip" : "json",
+      entries: result.entries.sort(byPath),
+    });
+    sources.push(...result.sources);
   }
 
   // Prefer Instagram's connections folder so similarly named files elsewhere
@@ -218,22 +283,44 @@ export async function parseInstagramFiles(
   const instagramSources = sources.filter(({ path }) =>
     path.toLowerCase().split("/").includes("followers_and_following"),
   );
-  const selected = instagramSources.length > 0 ? instagramSources : sources;
+  const selected = (
+    instagramSources.length > 0 ? instagramSources : sources
+  ).sort(byPath);
 
+  const selectedPaths = new Set(selected.map((source) => source.path));
+  for (const preview of previews) {
+    for (const entry of preview.entries) {
+      entry.used = selectedPaths.has(entry.path);
+    }
+  }
+
+  let problem: string | null = null;
   if (
     !selected.some((source) => source.kind === "followers") ||
     !selected.some((source) => source.kind === "following")
   ) {
-    throw new Error(
+    problem =
       "Couldn't find both followers and following files. Export " +
-        '"Followers and following" from Instagram in JSON format.',
+      '"Followers and following" from Instagram in JSON format.';
+  } else {
+    const tooLarge = selected.find(
+      (source) => source.size !== undefined && source.size > MAX_JSON_BYTES,
     );
+    if (tooLarge) {
+      problem = `${tooLarge.path.split("/").pop()} is larger than ${MAX_JSON_BYTES / MB} MB.`;
+    }
   }
 
-  selected.sort((a, b) =>
-    a.path.localeCompare(b.path, undefined, { numeric: true }),
-  );
+  return { sources: previews, selected, problem };
+}
 
+/**
+ * Parses the files chosen by `inspectInstagramFiles` entirely in the browser.
+ * Returns username → relationship bit flags.
+ */
+export async function parseInstagramSources(
+  selected: SourceFile[],
+): Promise<Map<string, number>> {
   const records = new Map<string, number>();
 
   // Read one file at a time to limit peak memory use.

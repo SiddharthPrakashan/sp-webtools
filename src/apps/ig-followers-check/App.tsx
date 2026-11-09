@@ -14,10 +14,13 @@ import { siteConfig, webtoolsChrome } from "@config/site";
 import { cn } from "@lib/utils";
 import { db, type TagField } from "@ig-followers-check/db";
 import { ImportControls } from "@ig-followers-check/components/ImportControls";
+import { ImportPreviewDialog } from "@ig-followers-check/components/ImportPreviewDialog";
 import { RecordsGrid } from "@ig-followers-check/components/RecordsGrid";
 import {
-  parseInstagramFiles,
+  inspectInstagramFiles,
+  parseInstagramSources,
   saveInstagramRecords,
+  type ExportPreview,
 } from "@ig-followers-check/lib/importer";
 import {
   computeStats,
@@ -54,13 +57,42 @@ export default function App() {
   const stats = useMemo(() => computeStats(records ?? []), [records]);
   const hasRecords = (records?.length ?? 0) > 0;
 
-  const handleImport = async (files: File[]) => {
+  const [preview, setPreview] = useState<ExportPreview | null>(null);
+
+  // Step 1: list the selected files so the user can review them.
+  const handleSelect = async (files: File[]) => {
+    setImporting(true);
+    setError("");
+    setStatus("Reading the contents of your selection…");
+
+    try {
+      setPreview(await inspectInstagramFiles(files));
+      setStatus("");
+    } catch (err) {
+      setStatus("");
+      setError(errorMessage(err));
+    } finally {
+      setImporting(false);
+    }
+  };
+
+  const handleCancel = () => {
+    setPreview(null);
+    setStatus("");
+  };
+
+  // Step 2: parse and save once the user confirms.
+  const handleProceed = async () => {
+    if (!preview) return;
+
+    const { selected } = preview;
+    setPreview(null);
     setImporting(true);
     setError("");
 
     try {
       setStatus("Reading your Instagram export…");
-      const parsed = await parseInstagramFiles(files);
+      const parsed = await parseInstagramSources(selected);
 
       setStatus("Saving results on this device…");
       await saveInstagramRecords(parsed);
@@ -126,9 +158,9 @@ export default function App() {
 
         <section aria-label="Import" className="space-y-4">
           <ImportControls
-            importing={importing}
+            importing={importing || preview !== null}
             hasRecords={hasRecords}
-            onImport={(files) => void handleImport(files)}
+            onImport={(files) => void handleSelect(files)}
             onClear={() => void handleClear()}
           />
 
@@ -163,6 +195,14 @@ export default function App() {
             </p>
           )}
         </section>
+
+        {preview && (
+          <ImportPreviewDialog
+            preview={preview}
+            onProceed={() => void handleProceed()}
+            onCancel={handleCancel}
+          />
+        )}
 
         {records === undefined ? (
           <p className="flex items-center gap-2 text-muted-foreground">
@@ -301,12 +341,23 @@ export default function App() {
               tagFilters={tagFilters}
               onTagChange={handleTagChange}
             />
-            
+
             <ul className="list-disc pl-4 space-y-1 text-xs text-muted-foreground">
-              <li>Tick the tag boxes to mark accounts; tags are kept when you import a newer export.</li>
-              <li>Results reflect the export you provided and may not match your current account.</li>
-              <li>Some profiles may be deactivated, deleted, suspended, or renamed and therefore may not be accessible.</li>
-              <li>{siteConfig.name} is not affiliated with Instagram or Meta.</li>
+              <li>
+                Tick the tag boxes to mark accounts; tags are kept when you
+                import a newer export.
+              </li>
+              <li>
+                Results reflect the export you provided and may not match your
+                current account.
+              </li>
+              <li>
+                Some profiles may be deactivated, deleted, suspended, or renamed
+                and therefore may not be accessible.
+              </li>
+              <li>
+                {siteConfig.name} is not affiliated with Instagram or Meta.
+              </li>
             </ul>
           </section>
         )}
