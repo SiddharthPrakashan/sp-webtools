@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import {
-  CircleAlert,
   CircleCheck,
   LoaderCircle,
   Search,
@@ -9,18 +8,18 @@ import {
   Tag,
 } from "lucide-react";
 
+import { ErrorAlert } from "@components/ErrorAlert";
 import { Layout } from "@components/Layout";
 import { siteConfig, webtoolsChrome } from "@config/site";
 import { cn } from "@lib/utils";
 import { db, type TagField } from "@ig-followers-check/db";
 import { ImportControls } from "@ig-followers-check/components/ImportControls";
-import { ImportPreviewDialog } from "@ig-followers-check/components/ImportPreviewDialog";
 import { RecordsGrid } from "@ig-followers-check/components/RecordsGrid";
 import {
+  ImportError,
   inspectInstagramFiles,
   parseInstagramSources,
   saveInstagramRecords,
-  type ExportPreview,
 } from "@ig-followers-check/lib/importer";
 import {
   computeStats,
@@ -29,10 +28,6 @@ import {
   tagStyles,
 } from "@ig-followers-check/lib/relationships";
 import { useIgSettingsStore } from "@ig-followers-check/stores/settings";
-
-function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : "Something went wrong.";
-}
 
 const exportSteps = [
   "In Instagram, open Accounts Center → Your information and permissions → Export your information.",
@@ -52,47 +47,34 @@ export default function App() {
   const [search, setSearch] = useState("");
   const [importing, setImporting] = useState(false);
   const [status, setStatus] = useState("");
-  const [error, setError] = useState("");
+  // null: no error. `message` is set for problems the user can fix;
+  // otherwise the generic "Something Went Wrong" message is shown.
+  const [error, setError] = useState<{ message?: string } | null>(null);
+
+  const showError = useCallback((err: unknown) => {
+    setError(err instanceof ImportError ? { message: err.message } : {});
+  }, []);
 
   const stats = useMemo(() => computeStats(records ?? []), [records]);
   const hasRecords = (records?.length ?? 0) > 0;
 
-  const [preview, setPreview] = useState<ExportPreview | null>(null);
-
-  // Step 1: list the selected files so the user can review them.
-  const handleSelect = async (files: File[]) => {
+  const handleImport = async (files: File[]) => {
     setImporting(true);
-    setError("");
-    setStatus("Reading the contents of your selection…");
-
-    try {
-      setPreview(await inspectInstagramFiles(files));
-      setStatus("");
-    } catch (err) {
-      setStatus("");
-      setError(errorMessage(err));
-    } finally {
-      setImporting(false);
-    }
-  };
-
-  const handleCancel = () => {
-    setPreview(null);
-    setStatus("");
-  };
-
-  // Step 2: parse and save once the user confirms.
-  const handleProceed = async () => {
-    if (!preview) return;
-
-    const { selected } = preview;
-    setPreview(null);
-    setImporting(true);
-    setError("");
+    setError(null);
 
     try {
       setStatus("Reading your Instagram export…");
-      const parsed = await parseInstagramSources(selected);
+      const preview = await inspectInstagramFiles(files);
+
+      // Debug: list what was found in the selected ZIP / JSON files.
+      for (const source of preview.sources) {
+        console.log(`${source.name} (${source.type}, ${source.size} bytes)`);
+        console.table(source.entries);
+      }
+
+      if (preview.problem) throw new ImportError(preview.problem);
+
+      const parsed = await parseInstagramSources(preview.selected);
 
       setStatus("Saving results on this device…");
       await saveInstagramRecords(parsed);
@@ -100,7 +82,7 @@ export default function App() {
       setStatus(`Imported ${parsed.size.toLocaleString()} unique accounts.`);
     } catch (err) {
       setStatus("");
-      setError(errorMessage(err));
+      showError(err);
     } finally {
       setImporting(false);
     }
@@ -118,20 +100,20 @@ export default function App() {
     try {
       await db.records.clear();
       setSearch("");
-      setError("");
+      setError(null);
       setStatus("All data cleared from this browser.");
     } catch (err) {
-      setError(errorMessage(err));
+      showError(err);
     }
   };
 
   const handleTagChange = useCallback(
     (username: string, field: TagField, value: boolean) => {
       db.records.update(username, { [field]: value }).catch((err: unknown) => {
-        setError(errorMessage(err));
+        showError(err);
       });
     },
-    [],
+    [showError],
   );
 
   return (
@@ -158,9 +140,9 @@ export default function App() {
 
         <section aria-label="Import" className="space-y-4">
           <ImportControls
-            importing={importing || preview !== null}
+            importing={importing}
             hasRecords={hasRecords}
-            onImport={(files) => void handleSelect(files)}
+            onImport={(files) => void handleImport(files)}
             onClear={() => void handleClear()}
           />
 
@@ -183,26 +165,12 @@ export default function App() {
             )}
           </div>
           {error && (
-            <p
-              role="alert"
-              className="flex items-start gap-2 rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-700 dark:text-red-300"
-            >
-              <CircleAlert
-                className="mt-0.5 size-4 shrink-0"
-                aria-hidden="true"
-              />
-              {error}
-            </p>
+            <ErrorAlert
+              message={error.message}
+              onDismiss={() => setError(null)}
+            />
           )}
         </section>
-
-        {preview && (
-          <ImportPreviewDialog
-            preview={preview}
-            onProceed={() => void handleProceed()}
-            onCancel={handleCancel}
-          />
-        )}
 
         {records === undefined ? (
           <p className="flex items-center gap-2 text-muted-foreground">

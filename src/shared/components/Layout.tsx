@@ -36,7 +36,6 @@ export function Layout({ site, children, showAds = false }: LayoutProps) {
       {showAds && (
         <AdSlot
           slot={adSlots.belowNavbar}
-          format="horizontal"
           minHeight={90}
           className={`${adContainer} pt-4`}
         />
@@ -50,7 +49,6 @@ export function Layout({ site, children, showAds = false }: LayoutProps) {
       {showAds && (
         <AdSlot
           slot={adSlots.aboveFooter}
-          format="horizontal"
           minHeight={90}
           className={`${adContainer} pb-6`}
         />

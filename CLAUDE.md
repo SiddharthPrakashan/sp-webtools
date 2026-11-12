@@ -67,14 +67,14 @@ Non-negotiable: keep each service worker scoped to its utility, never delete oth
 
 Use `AdSlot.tsx` only; page-level slots via `<Layout showAds>`, IDs in `src/shared/config/ads.ts` from `.env`. **Before touching ads or the ad-block check, read `docs/adsense-policy.md`.**
 
-Non-negotiable: never auto-refresh ads, never force an ad on a button click, never ask users to click ads, and never put ads on legal pages or on loading, error or empty screens.
+Non-negotiable: never auto-refresh ads, never force an ad on a button click, never ask users to click ads, and never put ads on legal pages or on loading, error or empty screens. Do not use any popups as Google ad sense do not allow content that fully or partially obscures Google-served ads.
 
 ## Privacy and security
 
 - Process files locally in the browser. Never send file contents anywhere.
 - Validate file types and sizes. Never use `eval()` or unsafe HTML injection.
 - Revoke object URLs and clean up listeners.
-- Never log user data. Never put secrets in `VITE_` variables or commit `.env`.
+- Never put secrets in `VITE_` variables or commit `.env`.
 - If a change adds analytics, a server call or other data collection, update the Privacy Policy.
 
 ## SEO

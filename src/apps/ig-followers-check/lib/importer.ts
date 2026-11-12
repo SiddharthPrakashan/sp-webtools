@@ -8,6 +8,14 @@ const FOLLOWS_YOU = 1;
 const YOU_FOLLOW = 2;
 const PENDING = 4;
 
+/**
+ * A problem with the selected files that the user can fix (wrong file,
+ * missing data, too large). Shown inline; other errors are unexpected.
+ */
+export class ImportError extends Error {
+  override name = "ImportError";
+}
+
 const MB = 1024 * 1024;
 /** Followers/following exports are small; full exports with media are not. */
 const MAX_ZIP_BYTES = 512 * MB;
@@ -124,7 +132,7 @@ function getEntries(payload: unknown, kind: FileKind): unknown[] {
   if (Array.isArray(payload)) return payload;
 
   if (!payload || typeof payload !== "object") {
-    throw new Error("Invalid Instagram JSON structure.");
+    throw new ImportError("Invalid Instagram JSON structure.");
   }
 
   const data = payload as Record<string, unknown>;
@@ -144,7 +152,7 @@ function getEntries(payload: unknown, kind: FileKind): unknown[] {
     if (Array.isArray(value)) return value as unknown[];
   }
 
-  throw new Error(`Unsupported Instagram ${kind} file format.`);
+  throw new ImportError(`Unsupported Instagram ${kind} file format.`);
 }
 
 function isZip(file: File) {
@@ -195,7 +203,7 @@ async function inspectZip(
   file: File,
 ): Promise<{ entries: PreviewEntry[]; sources: SourceFile[] }> {
   if (file.size > MAX_ZIP_BYTES) {
-    throw new Error(
+    throw new ImportError(
       `${file.name} is larger than ${MAX_ZIP_BYTES / MB} MB. ` +
         "Export only Followers and following to keep the file small.",
     );
@@ -205,7 +213,7 @@ async function inspectZip(
   try {
     zip = await JSZip.loadAsync(file);
   } catch {
-    throw new Error(`${file.name} is not a valid ZIP file.`);
+    throw new ImportError(`${file.name} is not a valid ZIP file.`);
   }
 
   const entries: PreviewEntry[] = [];
@@ -253,11 +261,11 @@ const byPath = (a: { path: string }, b: { path: string }) =>
 export async function inspectInstagramFiles(
   files: File[],
 ): Promise<ExportPreview> {
-  if (files.length === 0) throw new Error("No file selected.");
+  if (files.length === 0) throw new ImportError("No file selected.");
 
   const unsupported = files.find((file) => !isZip(file) && !isJson(file));
   if (unsupported) {
-    throw new Error(
+    throw new ImportError(
       `${unsupported.name} is not supported. Select a .zip or .json file.`,
     );
   }
@@ -328,19 +336,23 @@ export async function parseInstagramSources(
     const filename = source.path.split("/").pop();
 
     if (source.size !== undefined && source.size > MAX_JSON_BYTES) {
-      throw new Error(`${filename} is larger than ${MAX_JSON_BYTES / MB} MB.`);
+      throw new ImportError(
+        `${filename} is larger than ${MAX_JSON_BYTES / MB} MB.`,
+      );
     }
 
     const text = await source.read();
     if (text.length > MAX_JSON_BYTES) {
-      throw new Error(`${filename} is larger than ${MAX_JSON_BYTES / MB} MB.`);
+      throw new ImportError(
+        `${filename} is larger than ${MAX_JSON_BYTES / MB} MB.`,
+      );
     }
 
     let payload: unknown;
     try {
       payload = JSON.parse(text);
     } catch {
-      throw new Error(`${filename} is not valid JSON.`);
+      throw new ImportError(`${filename} is not valid JSON.`);
     }
 
     const list = getEntries(payload, source.kind);
@@ -363,12 +375,12 @@ export async function parseInstagramSources(
     // Stop if the format changed, rather than silently producing a wrong
     // comparison.
     if (list.length > 0 && recognized === 0) {
-      throw new Error(`Couldn't read usernames from ${filename}.`);
+      throw new ImportError(`Couldn't read usernames from ${filename}.`);
     }
   }
 
   if (records.size === 0) {
-    throw new Error("No accounts were found in the selected files.");
+    throw new ImportError("No accounts were found in the selected files.");
   }
 
   return records;
