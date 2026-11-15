@@ -2,7 +2,7 @@
 
 ## Project
 
-SP WebTools (https://webtools.siddharthprakashan.com): independent, privacy-focused browser utilities. Vite **multi-page app** (MPA), MIT licensed, deployed on Cloudflare Pages. The same repo also builds the root website (https://siddharthprakashan.com) as a separate Cloudflare Pages project; see `docs/vite-config.md`.
+SP WebTools (https://spwebtools.com): independent, privacy-focused browser utilities. Vite **multi-page app** (MPA), MIT licensed, deployed on Cloudflare Pages. The same repo also builds the root website (https://siddharthprakashan.com) as a separate Cloudflare Pages project; see `docs/vite-config.md`.
 
 **Stack:** React 19, TypeScript, Vite 8, Tailwind CSS 4, shadcn/ui, Lucide React, AG Grid Community, Zustand, Dexie, ESLint, Prettier. Package manager: **pnpm only**.
 
@@ -65,16 +65,18 @@ Non-negotiable: keep each service worker scoped to its utility, never delete oth
 
 ## Advertising
 
+Ads run on SP WebTools only. The root website (siddharthprakashan.com) has **no ads**: never add the AdSense script, `showAds`, `AdSlot` or an `ads.txt` to `root-site/` or `src/apps/root/`.
+
 Use `AdSlot.tsx` only; page-level slots via `<Layout showAds>`, IDs in `src/shared/config/ads.ts` from `.env`. **Before touching ads or the ad-block check, read `docs/adsense-policy.md`.**
 
-Non-negotiable: never auto-refresh ads, never force an ad on a button click, never ask users to click ads, and never put ads on legal pages or on loading, error or empty screens.
+Non-negotiable: never auto-refresh ads, never force an ad on a button click, never ask users to click ads, and never put ads on legal pages or on loading, error or empty screens. Do not use any popups as Google ad sense do not allow content that fully or partially obscures Google-served ads.
 
 ## Privacy and security
 
 - Process files locally in the browser. Never send file contents anywhere.
 - Validate file types and sizes. Never use `eval()` or unsafe HTML injection.
 - Revoke object URLs and clean up listeners.
-- Never log user data. Never put secrets in `VITE_` variables or commit `.env`.
+- Never put secrets in `VITE_` variables or commit `.env`.
 - If a change adds analytics, a server call or other data collection, update the Privacy Policy.
 
 ## SEO

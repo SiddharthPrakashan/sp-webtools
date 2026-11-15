@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://webtools.siddharthprakashan.com/sitemap.xml
+Sitemap: https://spwebtools.com/sitemap.xml

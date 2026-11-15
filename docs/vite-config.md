@@ -1,5 +1,5 @@
 
-Reuse the existing React + Vite multipage application (MPA), create a separate landing page, and deploy it to siddharthprakashan.com while keeping the Web Tools application at webtools.siddharthprakashan.com.
+Reuse the existing React + Vite multipage application (MPA), create a separate landing page, and deploy it to siddharthprakashan.com while keeping the Web Tools application at spwebtools.com.
 
 share the footer, styling, navigation components and SEO utilities without duplicating code.
 
@@ -11,7 +11,7 @@ vite.root.config.ts and vite.webtools.config.ts
 | Repository       | Same repo                | Same repo                         |
 | Build command    | `pnpm build:root`        | `pnpm build:webtools`             |
 | Output directory | `dist-root`              | `dist-webtools`                   |
-| Custom domain    | `siddharthprakashan.com` | `webtools.siddharthprakashan.com` |
+| Custom domain    | `siddharthprakashan.com` | `spwebtools.com` |
 
 
 ```

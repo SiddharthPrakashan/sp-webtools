@@ -9,7 +9,7 @@ interface AppProps {
 
 export default function App({ page }: AppProps) {
   return (
-    <Layout site={rootChrome} showAds={page === "home"}>
+    <Layout site={rootChrome}>
       {page === "home" ? (
         <Home />
       ) : (
