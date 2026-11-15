@@ -13,7 +13,7 @@ export interface Tool {
 export const siteConfig = {
   name: "SP WebTools",
   shortName: "SP WebTools",
-  url: "https://webtools.siddharthprakashan.com",
+  url: "https://spwebtools.com",
   description: "Independent, privacy-focused browser utilities.",
   author: "Siddharth Prakashan",
   authorUrl: "https://siddharthprakashan.com",
@@ -91,7 +91,7 @@ export interface SiteChrome {
   footerNote?: string;
 }
 
-/** SP WebTools: https://webtools.siddharthprakashan.com */
+/** SP WebTools: https://spwebtools.com */
 export const webtoolsChrome: SiteChrome = {
   name: siteConfig.name,
   shortName: siteConfig.shortName,

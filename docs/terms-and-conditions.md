@@ -2,7 +2,7 @@
 
 **Last updated: November 2, 2026**
 
-Welcome to **SP WebTools** (`https://webtools.siddharthprakashan.com`). These Terms and Conditions govern your access to and use of our website and the tools and services provided through it.
+Welcome to **SP WebTools** (`https://spwebtools.com`). These Terms and Conditions govern your access to and use of our website and the tools and services provided through it.
 
 By accessing or using this website, you agree to these Terms and Conditions. If you do not agree with any part of these terms, please discontinue using the website.
 
@@ -153,7 +153,7 @@ Any disputes arising in connection with the use of this website shall be subject
 
 If you have any questions regarding these Terms and Conditions, you can contact us through:
 
-**Website:** https://webtools.siddharthprakashan.com
+**Website:** https://spwebtools.com
 
 **Email:** [Your Contact Email]
 

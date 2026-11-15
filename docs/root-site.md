@@ -47,7 +47,7 @@ My first web tool, **Instagram Followers Check**, helps you understand your Inst
 - Browser-based file processing.
 - Simple and convenient to use.
 
-### [Try Instagram Followers Check →](https://webtools.siddharthprakashan.com/ig-followers-check/)
+### [Try Instagram Followers Check →](https://spwebtools.com/ig-followers-check/)
 
 *The tool analyzes your exported Instagram data and does not provide live Instagram account information. It is an independent project and is not affiliated with Instagram or Meta.*
 
@@ -65,7 +65,7 @@ A growing selection of practical utilities for common development tasks, data pr
 
 These tools are currently planned, and their availability and features may change during development.
 
-**[Explore SP WebTools →](https://webtools.siddharthprakashan.com/)**
+**[Explore SP WebTools →](https://spwebtools.com/)**
 
 ---
 
@@ -109,9 +109,9 @@ Whether you're here to try a tool, explore my work, or share an idea, I apprecia
 
 Have feedback, suggestions, or an idea for a useful web tool? Feel free to connect with me through the contact links provided on this website.
 
-**[Visit SP WebTools](https://webtools.siddharthprakashan.com/)**
+**[Visit SP WebTools](https://spwebtools.com/)**
 
-**[Open Instagram Followers Check](https://webtools.siddharthprakashan.com/ig-followers-check/)**
+**[Open Instagram Followers Check](https://spwebtools.com/ig-followers-check/)**
 
 ---
 

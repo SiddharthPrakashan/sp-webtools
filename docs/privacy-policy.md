@@ -2,7 +2,7 @@
 
 **Last updated: November 4, 2026**
 
-Welcome to **SP WebTools** (`https://webtools.siddharthprakashan.com`). Your privacy is important to us. This Privacy Policy explains how our website handles information, how browser storage works, and how third-party services may collect information when you use our website.
+Welcome to **SP WebTools** (`https://spwebtools.com`). Your privacy is important to us. This Privacy Policy explains how our website handles information, how browser storage works, and how third-party services may collect information when you use our website.
 
 By accessing or using this website, you acknowledge that you have read this Privacy Policy.
 
@@ -188,7 +188,7 @@ We encourage visitors to review this page periodically.
 
 If you have questions, concerns, or requests regarding this Privacy Policy or our data practices, you can contact us through:
 
-**Website:** https://webtools.siddharthprakashan.com
+**Website:** https://spwebtools.com
 
 **Email:** [Your Contact Email]
 

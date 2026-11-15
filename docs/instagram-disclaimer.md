@@ -2,7 +2,7 @@
 
 **Last updated: November 2, 2026**
 
-The Instagram-related tools available on **SP WebTools** (`https://webtools.siddharthprakashan.com`) are independent tools designed to help users analyze data exported from Instagram.
+The Instagram-related tools available on **SP WebTools** (`https://spwebtools.com`) are independent tools designed to help users analyze data exported from Instagram.
 
 Please read this disclaimer carefully before using our Instagram tools.
 
@@ -45,7 +45,7 @@ Our Instagram Unfollow Checker is designed to process your Instagram export file
 
 Your exported Instagram data remains under your control. You should avoid using the tool on shared or untrusted devices if your export contains personal information.
 
-For more information, please read our [Privacy Policy](https://webtools.siddharthprakashan.com/privacy-policy/).
+For more information, please read our [Privacy Policy](https://spwebtools.com/privacy-policy/).
 
 ## 5. Accuracy and Limitations
 
@@ -110,7 +110,7 @@ To the maximum extent permitted by applicable law, SP WebTools and its owners an
 
 If you have questions regarding this disclaimer or our Instagram tools, you can contact us through:
 
-**Website:** https://webtools.siddharthprakashan.com
+**Website:** https://spwebtools.com
 
 **Email:** [Your Contact Email]
 

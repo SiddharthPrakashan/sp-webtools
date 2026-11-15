@@ -2,7 +2,7 @@
 
 ## Project
 
-SP WebTools (https://webtools.siddharthprakashan.com): independent, privacy-focused browser utilities. Vite **multi-page app** (MPA), MIT licensed, deployed on Cloudflare Pages. The same repo also builds the root website (https://siddharthprakashan.com) as a separate Cloudflare Pages project; see `docs/vite-config.md`.
+SP WebTools (https://spwebtools.com): independent, privacy-focused browser utilities. Vite **multi-page app** (MPA), MIT licensed, deployed on Cloudflare Pages. The same repo also builds the root website (https://siddharthprakashan.com) as a separate Cloudflare Pages project; see `docs/vite-config.md`.
 
 **Stack:** React 19, TypeScript, Vite 8, Tailwind CSS 4, shadcn/ui, Lucide React, AG Grid Community, Zustand, Dexie, ESLint, Prettier. Package manager: **pnpm only**.
 

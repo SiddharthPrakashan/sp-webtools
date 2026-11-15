@@ -1,6 +1,6 @@
 import { createSiteConfig, fromRoot } from "./vite.shared.ts";
 
-// SP WebTools: https://webtools.siddharthprakashan.com
+// SP WebTools: https://spwebtools.com
 export default createSiteConfig({
   root: fromRoot(),
   publicDir: fromRoot("public"),
